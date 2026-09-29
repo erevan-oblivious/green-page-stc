@@ -1,44 +1,42 @@
 ---
-const values = [
+const cards = [
   {
     number: "01",
-    title: "Uncompromising Continuity",
-    description: "You see the same experienced vet every single visit. We build a genuine, long-term understanding of your horse's history, temperament, and baseline health."
+    title: "Title 01",
+    description: "Description 01"
   },
   
   {
     number: "02",
-    title: "Yard-First Clinical Excellence",
-    description: "Equipped with referral-quality mobile diagnostics, we bring advanced radiography, ultrasonography, and endoscopy directly to your stable—reducing stress for your horse."
+    title: "Title 02",
+    description: "Description 02"
   },
 
   {
     number: "03",
-    title: "Collaborative Care",
-    description: "We work alongside your farrier, physio, and yard manager as an integrated team, ensuring every aspect of your horse's management is aligned."
+    title: "Title 03",
+    description: "Description 03"
   }
 ];
 ---
 
-<section class="values-section">
-  <div class="values-container">
+<section class="banner-section">
+  <div class="banner-container">
     
     <!-- Section Header -->
-    <div class="values-header">
-      <span class="values-eyebrow">Our Standards</span>
-      <h2 class="values-title">Equine Veterinary Care Built Around Trust & Continuity</h2>
-      <p class="values-subtitle">
-        Independent care means our decisions are driven entirely by equine welfare, client trust, and clinical best practices.
-      </p>
+    <div class="banner-header">
+      <span class="banner-eyebrow">Our Items</span>
+      <h2 class="banner-title">Title</h2>
+      <p class="banner-subtitle">Subtitle</p>
     </div>
 
     <!-- Values Grid -->
-    <div class="values-grid">
-      {values.map((item) => (
-        <div class="value-card">
-          <div class="value-number">{item.number}</div>
-          <h3 class="value-title">{item.title}</h3>
-          <p class="value-description">{item.description}</p>
+    <div class="banner-grid">
+      {cards.map((item) => (
+        <div class="banner-card">
+          <div class="card-number">{item.number}</div>
+          <h3 class="card-title">{item.title}</h3>
+          <p class="card-description">{item.description}</p>
         </div>
       ))}
     </div>
@@ -47,110 +45,110 @@ const values = [
 </section>
 
 <style>
-  .values-section {
+  .banner-section {
     padding: 6rem 1.5rem;
-    background-color: var(--color-navy); /* Deep Navy Contrast Canvas (#0B2240) */
+    background-color: var(--bg-primary);
     width: 100%;
-    color: var(--color-text-inverse);
+    color: var(--text-bright);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .values-container {
+  .banner-container {
     margin: 0 auto;
   }
 
   /* Header Typography */
-  .values-header {
+  .banner-header {
     text-align: center;
     max-width: 720px;
     margin: 0 auto 4rem;
   }
 
-  .values-eyebrow {
+  .banner-eyebrow {
     font-size: 0.8125rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-gold);
+    color: var(--text-bright);
     display: block;
     margin-bottom: 0.75rem;
   }
 
-  .values-title {
+  .banner-title {
     font-family: var(--font-heading);
     font-size: clamp(2.25rem, 4vw, 3.125rem);
-    color: #ffffff;
+    color: var(--text-bright);
     line-height: 1.15;
     margin: 0 0 1rem 0;
   }
 
-  .values-subtitle {
+  .banner-subtitle {
     font-size: 1.125rem;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--text-muted);
     margin: 0;
   }
 
   /* Grid Layout */
-  .values-grid {
+  .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
     max-width: var(--max-width-wide, 71.25rem);
     margin-inline: auto;
   }
 
   /* Individual Value Card */
-  .value-card {
+  .banner-card {
     position: relative;
-    padding: 2rem 1.5rem;
+    margin: 1.25rem;
+    padding: 1.25rem;
     background-color: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md, 8px);
     transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
   }
 
-  .value-card:hover {
+  .banner-card:hover {
     transform: translateY(-3px);
-    border-color: rgba(197, 146, 69, 0.4); /* Gold border highlight on hover */
+    border-color: #ffffff;
     background-color: rgba(255, 255, 255, 0.05);
   }
 
-  /* Gold Number Indicator */
-  .value-number {
-    font-family: var(--font-heading);
+  /* Number Indicator */
+  .card-number {
+    font-family: var(--font-family-base);
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--color-gold);
+    color: var(--text-muted);
     margin-bottom: 1.25rem;
     display: inline-block;
-    border-bottom: 1.5px solid var(--color-gold);
+    border-bottom: 1.5px solid var(--text-muted);
     padding-bottom: 0.25rem;
   }
 
-  .value-title {
-    font-family: var(--font-heading);
-    font-size: 1.375rem;
+  .card-title {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-lg);
     font-weight: 700;
     color: #ffffff;
     line-height: 1.25;
     margin: 0 0 0.75rem 0;
   }
 
-  .value-description {
-    font-size: 0.9375rem;
+  .card-description {
+    font-size: --font-size-base: 1rem;
     line-height: 1.65;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-muted)
     margin: 0;
   }
 
   @media (max-width: 640px) {
-    .values-section {
+    .banner-section {
       padding: 4rem 1rem;
     }
 
-    .values-grid {
+    .banner-grid {
       grid-template-columns: 1fr;
       gap: 1.25rem;
     }
