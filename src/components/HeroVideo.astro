@@ -1,0 +1,117 @@
+---
+
+---
+
+<section class="hero-banner">
+  <!-- 1. Silent Background Video -->
+  <video
+    autoplay
+    loop
+    muted
+    playsinline
+    preload="metadata"
+    poster="https://your-bucket.r2.cloudflarestorage.com/hero-poster.jpg"
+    class="hero-video"
+    aria-hidden="true"
+    tabindex="-1"
+  >
+    <source src="https://your-bucket.r2.cloudflarestorage.com/hero-bg.webm" type="video/webm" />
+    <source src="https://your-bucket.r2.cloudflarestorage.com/hero-bg.mp4" type="video/mp4" />
+  </video>
+
+  <!-- 2. Dark Overlay for WCAG Text Contrast -->
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <!-- 3. Foreground Content -->
+  <div class="hero-content">
+    <h1 class="hero-title">Headline Text Goes Here</h1>
+    <p class="hero-subtitle">Supporting descriptive copy designed for maximum visual legibility over video.</p>
+    <div class="hero-actions">
+      <a href="/contact" class="btn-primary">Primary Action</a>
+      <a href="/about" class="btn-secondary">Secondary Action</a>
+    </div>
+  </div>
+</section>
+
+<style>
+
+/* ==========================================================================
+   Hero Banner with Background Video
+   ========================================================================== */
+
+/* Hero Container Setup */
+.hero-banner {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #0d1b2a; /* Fallback brand color while loading */
+}
+
+/* Layer 1: Background Video covering container */
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* Layer 2: Semi-transparent Overlay for WCAG AA Contrast */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(13, 27, 42, 0.65); /* 65% brand overlay opacity */
+  z-index: 2;
+}
+
+/* Layer 3: Text & CTA Content */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: var(--max-width-wide, 71.25rem);
+  padding: 3rem 1.5rem;
+  color: #ffffff;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  max-width: 45rem;
+  margin: 0 auto 2rem;
+  color: var(--color-text-muted);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Reduced Motion Override for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .hero-video {
+    display: none;
+  }
+
+  .hero-banner {
+    background-image: url('https://your-bucket.r2.cloudflarestorage.com/hero-poster.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+</style>
