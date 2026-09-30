@@ -1,56 +1,94 @@
 ---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  videoWebm?: string;
+  videoMp4?: string;
+  poster?: string;
+  
+  // Call to Action Buttons
+  primaryButtonText?: string;
+  primaryButtonLink?: string;
+  secondaryButtonText?: string;
+  secondaryButtonLink?: string;
 
+  // Customization
+  minHeight?: string;
+}
+
+const {
+  title = "Headline Text Goes Here",
+  subtitle = "Supporting descriptive copy designed for maximum visual legibility over video.",
+  videoWebm,
+  videoMp4,
+  poster,
+  primaryButtonText = "Primary Action",
+  primaryButtonLink,
+  secondaryButtonText,
+  secondaryButtonLink,
+  minHeight = "80vh",
+} = Astro.props;
 ---
 
-<section class="hero-banner">
+<section 
+  class="hero-banner" 
+  style={{ 
+    '--poster-url': `url('${poster}')`,
+    '--hero-min-height': minHeight 
+  }}
+>
   <!-- 1. Silent Background Video -->
-  <video
-    autoplay
-    loop
-    muted
-    playsinline
-    preload="metadata"
-    poster="https://your-bucket.r2.cloudflarestorage.com/hero-poster.jpg"
-    class="hero-video"
-    aria-hidden="true"
-    tabindex="-1"
-  >
-    <source src="https://your-bucket.r2.cloudflarestorage.com/hero-bg.webm" type="video/webm" />
-    <source src="https://your-bucket.r2.cloudflarestorage.com/hero-bg.mp4" type="video/mp4" />
-  </video>
+  {(videoWebm || videoMp4) && (
+    <video
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="metadata"
+      poster={poster}
+      class="hero-video"
+      aria-hidden="true"
+      tabindex="-1"
+    >
+      {videoWebm && <source src={videoWebm} type="video/webm" />}
+      {videoMp4 && <source src={videoMp4} type="video/mp4" />}
+    </video>
+  )}
 
-  <!-- 2. Dark Overlay for WCAG Text Contrast -->
+  <!-- 2. Dark Overlay using CSS Variable Token -->
   <div class="hero-overlay" aria-hidden="true"></div>
 
   <!-- 3. Foreground Content -->
   <div class="hero-content">
-    <h1 class="hero-title">Headline Text Goes Here</h1>
-    <p class="hero-subtitle">Supporting descriptive copy designed for maximum visual legibility over video.</p>
-    <div class="hero-actions">
-      <a href="/contact" class="btn-primary">Primary Action</a>
-      <a href="/about" class="btn-secondary">Secondary Action</a>
-    </div>
+    <h1 class="hero-title">{title}</h1>
+    {subtitle && <p class="hero-subtitle">{subtitle}</p>}
+    
+    {(primaryButtonLink || secondaryButtonLink) && (
+      <div class="hero-actions">
+        {primaryButtonLink && (
+          <a href={primaryButtonLink} class="btn btn-primary">{primaryButtonText}</a>
+        )}
+        {secondaryButtonLink && (
+          <a href={secondaryButtonLink} class="btn btn-secondary">{secondaryButtonText}</a>
+        )}
+      </div>
+    )}
   </div>
 </section>
 
 <style>
-
-/* ==========================================================================
-   Hero Banner with Background Video
-   ========================================================================== */
-
-/* Hero Container Setup */
+/* Container Setup */
 .hero-banner {
   position: relative;
-  min-height: 80vh;
+  min-height: var(--hero-min-height, 80vh);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background-color: #0d1b2a; /* Fallback brand color while loading */
+  background-color: var(--bg-primary); /* Uses global site background token */
 }
 
-/* Layer 1: Background Video covering container */
+/* Layer 1: Background Video */
 .hero-video {
   position: absolute;
   top: 0;
@@ -61,57 +99,95 @@
   z-index: 1;
 }
 
-/* Layer 2: Semi-transparent Overlay for WCAG AA Contrast */
+/* Layer 2: 65% Brand Tint Overlay for WCAG AA Contrast */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(13, 27, 42, 0.65); /* 65% brand overlay opacity */
+  background-color: color-mix(in srgb, var(--bg-primary) 65%, transparent);
   z-index: 2;
 }
 
-/* Layer 3: Text & CTA Content */
+/* Layer 3: Text & Actions */
 .hero-content {
   position: relative;
   z-index: 3;
   width: 100%;
-  max-width: var(--max-width-wide, 71.25rem);
-  padding: 3rem 1.5rem;
-  color: #ffffff;
+  max-width: var(--max-width-wide);
+  padding: 4rem 1.5rem;
+  color: var(--text-bright);
   text-align: center;
 }
 
 .hero-title {
+  font-family: var(--font-family-base);
   font-size: clamp(2.25rem, 5vw, 3.75rem);
   font-weight: 700;
   line-height: 1.1;
   margin-bottom: 1rem;
+  color: var(--text-bright);
 }
 
 .hero-subtitle {
   font-size: clamp(1rem, 2vw, 1.25rem);
   max-width: 45rem;
   margin: 0 auto 2rem;
-  color: var(--color-text-muted);
+  color: var(--text-muted); /* Aligned token name with global.css */
+  line-height: 1.5;
 }
 
 .hero-actions {
   display: flex;
   gap: 1rem;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
 }
 
-/* Reduced Motion Override for Accessibility */
+/* Standardized Template Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1.75rem;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  border-radius: var(--radius-sm, 6px);
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+  background-color: var(--text-muted);
+  color: var(--bg-primary);
+  border: 1px solid var(--text-bright);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-bright);
+  border: 1.5px solid var(--border-subtle);
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-bright);
+  transform: translateY(-1px);
+}
+
+/* Reduced Motion & Mobile Accessibility Fallback */
 @media (prefers-reduced-motion: reduce) {
   .hero-video {
     display: none;
   }
 
   .hero-banner {
-    background-image: url('https://your-bucket.r2.cloudflarestorage.com/hero-poster.jpg');
+    background-image: var(--poster-url);
     background-size: cover;
     background-position: center;
   }
 }
-
 </style>

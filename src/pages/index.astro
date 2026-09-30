@@ -1,8 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
-import ColorBanner from '../components/ColorBanner.astro';
-import HeroText from '../components/HeroText.astro';
+import NavGrid from '../components/NavGrid.astro'
 
 ---
 
@@ -11,18 +10,12 @@ import HeroText from '../components/HeroText.astro';
   description="Webpage Description"
 >
 
+<section class="section-header">
+
 <h1>Home</h1>
 
-<HeroText 
-    title="Hero Title"
-    lead="Hero Lead"
-    description="Hero Description"
-    primarybuttontext="Phone"
-    primarybuttonlink="tel:000000000000"
-    secondarybuttontext="Submit"
-    secondarybuttonlink="/register"
-    whatsappurl="https://wa.me/447965478726?text=Hi%GreenPage"
-    whatsapptext="WhatsApp"
-  />
+</section>
+
+<NavGrid />
 
 </BaseLayout>

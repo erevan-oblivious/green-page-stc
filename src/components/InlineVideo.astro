@@ -1,43 +1,73 @@
 ---
-
----
-
-<figure class="video-embed">
-  <div class="video-aspect-wrapper">
-    <video
-      controls
-      preload="metadata"
-      poster="https://your-bucket.r2.cloudflarestorage.com/video-poster.jpg"
-      class="video-player"
-    >
-      <source src="https://your-bucket.r2.cloudflarestorage.com/video.webm" type="video/webm" />
-      <source src="https://your-bucket.r2.cloudflarestorage.com/video.mp4" type="video/mp4" />
-      <p>Your browser does not support HTML video. <a href="https://your-bucket.r2.cloudflarestorage.com/video.mp4">Download the MP4 file instead</a>.</p>
-    </video>
-  </div>
-  <figcaption class="video-caption">
-    Optional descriptive caption for screen readers and visual context.
-  </figcaption>
-</figure>
-
-<style>
-
-/* Container styling */
-.video-embed {
-  width: 100%;
-  max-width: var(--max-width-wide, 71.25rem);
-  margin: 2rem auto;
+interface Props {
+  videoMp4?: string;
+  videoWebm?: string;
+  poster?: string;
+  caption?: string;
+  aspectRatio?: string;
 }
 
-/* 16:9 aspect ratio wrapper to prevent layout shifts */
+const {
+  videoWebm,
+  videoMp4,
+  poster,
+  caption,
+  aspectRatio = "16 / 9",
+} = Astro.props;
+
+// Fallback download link preference (MP4 first, then WebM)
+const downloadUrl = videoWebm || videoMp4;
+---
+
+{(videoWebm || videoMp4) && (
+  <figure class="video-embed">
+    <div 
+      class="video-aspect-wrapper" 
+      style={{ '--aspect-ratio': aspectRatio }}
+    >
+      <video
+        controls
+        preload="metadata"
+        poster={poster}
+        class="video-player"
+      >
+        {videoWebm && <source src={videoWebm} type="video/webm" />}
+        {videoMp4 && <source src={videoMp4} type="video/mp4" />}
+        {downloadUrl && (
+          <p>
+            Your browser does not support HTML video. 
+            <a href={downloadUrl} download>Download the video file instead</a>.
+          </p>
+        )}
+      </video>
+    </div>
+
+    {caption && (
+      <figcaption class="video-caption">
+        {caption}
+      </figcaption>
+    )}
+  </figure>
+)}
+
+<style>
+/* Container styling using global max-width token */
+.video-embed {
+  width: 100%;
+  max-width: var(--max-width-wide);
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* Aspect ratio wrapper preventing layout shifts */
 .video-aspect-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: var(--aspect-ratio, 16 / 9);
   background-color: #000000;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-md, 8px);
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 /* Video element positioning */
@@ -48,12 +78,12 @@
   display: block;
 }
 
-/* Optional Caption */
+/* Caption styling using global text token */
 .video-caption {
   font-size: 0.875rem;
   color: var(--text-muted);
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
   text-align: center;
+  font-style: italic;
 }
-
 </style>
