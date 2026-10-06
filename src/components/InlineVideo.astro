@@ -23,7 +23,7 @@ const downloadUrl = videoWebm || videoMp4;
   <figure class="video-embed">
     <div 
       class="video-aspect-wrapper" 
-      style={{ '--aspect-ratio': aspectRatio }}
+      style={`--aspect-ratio: ${aspectRatio};`}
     >
       <video
         controls
@@ -51,10 +51,12 @@ const downloadUrl = videoWebm || videoMp4;
 )}
 
 <style>
+
 /* Container styling using global max-width token */
+
 .video-embed {
   width: 100%;
-  max-width: var(--max-width-wide);
+  max-width: 52.5rem; /* 840px */
   margin: 2rem auto;
   padding: 0 1.5rem;
 }
@@ -81,7 +83,7 @@ const downloadUrl = videoWebm || videoMp4;
 /* Caption styling using global text token */
 .video-caption {
   font-size: 0.875rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin-top: 0.75rem;
   text-align: center;
   font-style: italic;

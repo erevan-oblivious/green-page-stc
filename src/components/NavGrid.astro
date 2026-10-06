@@ -24,7 +24,7 @@ const defaultItems: CardItem[] = [
   },
   {
     title: "About Our Business",
-    description: "Learn more about our practice, our values, and our commitment to exceptional service quality.",
+    description: "Learn more about us, our values, and our commitment to exceptional service quality.",
     link: "/about",
     linkText: "Read Our Story",
     accent: "secondary"
@@ -97,7 +97,7 @@ const {
 <style>
   .nav-grid-section {
     padding: 5rem 1.5rem;
-    background-color: var(--bg-primary);
+    background-color: var(--primary);
   }
 
   .nav-grid-container {
@@ -117,7 +117,7 @@ const {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--text-muted, var(--text-bright));
+    color: var(--text-primary);
     display: block;
     margin-bottom: 0.5rem;
   }
@@ -125,14 +125,14 @@ const {
   .section-title {
     font-family: var(--font-family-base);
     font-size: clamp(2rem, 3.5vw, 2.75rem);
-    color: var(--text-bright);
+    color: var(--text-primary);
     line-height: 1.15;
     margin: 0 0 0.75rem 0;
   }
 
   .section-subtitle {
     font-size: 1.0625rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     line-height: 1.5;
     margin: 0;
   }
@@ -149,7 +149,7 @@ const {
     position: relative;
     display: flex;
     flex-direction: column;
-    background-color: var(--bg-primary);
+    background-color: var(--background);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md, 8px);
     text-decoration: none;
@@ -168,11 +168,11 @@ const {
   }
 
   .nav-card.accent-primary .card-border-top {
-    background-color: var(--text-muted, var(--text-bright));
+    background-color: var(--text-primary);
   }
 
   .nav-card.accent-secondary .card-border-top {
-    background-color: var(--text-muted, var(--text-muted));
+    background-color: var(--secondary);
   }
 
   /* Inner Padding */
@@ -188,7 +188,7 @@ const {
     font-family: var(--font-family-base);
     font-size: 1.375rem;
     font-weight: 700;
-    color: var(--text-bright);
+    color: var(--text-primary);
     line-height: 1.25;
     margin: 0 0 0.75rem 0;
     transition: color 0.2s ease;
@@ -197,7 +197,7 @@ const {
   .card-description {
     font-size: 0.9375rem;
     line-height: 1.6;
-    color: var(--text-muted);
+    color: var(--text-primary);
     margin: 0 0 2rem 0;
     flex-grow: 1;
   }
@@ -209,7 +209,7 @@ const {
     gap: 0.5rem;
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--text-bright);
+    color: var(--text-primary);
     margin-top: auto;
   }
 
@@ -226,12 +226,12 @@ const {
 
   .nav-card:hover .card-title,
   .nav-card:hover .action-text {
-    color: var(--text-muted, var(--text-bright));
+    color: var(--text-primary);
   }
 
   .nav-card:hover .action-arrow {
     transform: translateX(5px);
-    color: var(--text-muted, var(--text-bright));
+    color: var(--text-primary);
   }
 
   @media (max-width: 640px) {
