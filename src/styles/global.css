@@ -2,7 +2,7 @@
    Google Fonts Import
    ========================================================================== */
 
-/* to import Google Fonts here as needed */
+/* Instead of importing Google Fonts here, install font packages to self-host fonts and then deploy using frontmatter in BaseLayout*/
 
 /* ==========================================================================
    Base Mechanics

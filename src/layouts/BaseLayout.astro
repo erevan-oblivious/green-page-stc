@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css'; // Ensure import filename matches global_2.css
+// import fonts for self-hosting from @fontsource if custom fonts are required.
 import WhatsAppButton from '../components/WhatsAppFloat.astro';
 
 interface Props {
@@ -34,7 +35,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin)
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image} />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/helix-favicon.svg" />
+    <link rel="icon" href="/helix-favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/helix-favicon.png" />
+
 </head>
 
 <body>
@@ -92,8 +97,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin)
       }
     </script>
 
-    </div>
-  </header>
+  </div>
+
+</header>
 
 <main class="main" id="main-content">
 
