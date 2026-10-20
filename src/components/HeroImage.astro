@@ -1,10 +1,12 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
   title?: string;
   lead?: string;
   description?: string;
-  bgImage: string;
-  bgImageMobile?: string; // Optional flag added
+  bgImage: ImageMetadata;
+  bgImageMobile?: ImageMetadata;
   
   primaryButtonText?: string;
   primaryButtonLink?: string;
@@ -27,14 +29,42 @@ const {
   tintOpacity = "25%",
 } = Astro.props;
 
-const mobileImage = bgImageMobile ? `url('${bgImageMobile}')` : `url('${bgImage}')`;
 ---
 
 <section 
-  class="hero-image-banner" 
-  style={`--bg-image: url('${bgImage}'); --bg-image-mobile: ${mobileImage}; --tint-opacity: ${tintOpacity};`}
->
-  <div class="hero-overlay" aria-hidden="true"></div>
+  class="hero-image-banner">
+
+  <!-- Optimized Astro Background Images -->
+  {bgImageMobile ? ( <>
+    <Image 
+          src={bgImageMobile} 
+          alt="Heatherlea Holiday Cottage" 
+          widths={[360, 640, 768]} 
+          sizes="100vw"
+          loading="eager"
+          class="hero-bg hero-bg-mobile" 
+    />
+    <Image 
+          src={bgImage} 
+          alt="Heatherlea Holiday Cottage" 
+          widths={[1024, 1440, 1920]} 
+          sizes="100vw"
+          loading="eager"
+          class="hero-bg hero-bg-desktop" 
+      />
+      </>
+  ) : (
+    <Image 
+      src={bgImage} 
+      alt="Heatherlea Holiday Cottage" 
+      widths={[640, 1024, 1920]} 
+      sizes="100vw"
+      loading="eager"
+      class="hero-bg" 
+    />
+  )}
+
+  <div class="hero-overlay" style={`--tint-opacity: ${tintOpacity};`}></div>
 
   <div class="hero-content">
     <div class="hero-text-group">
@@ -85,17 +115,36 @@ const mobileImage = bgImageMobile ? `url('${bgImageMobile}')` : `url('${bgImage}
     width: 100%;
     position: relative;
     padding: 8.5rem 1.5rem 4rem;
-    background-image: var(--bg-image);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
-  @media (max-width: 768px), (max-width: 1024px) and (orientation: portrait) {
-    .hero-image-banner {
-      background-image: var(--bg-image-mobile);
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+  }
+
+    /* Responsive toggles when bgImageMobile is provided */
+  .hero-bg-mobile {
+    display: block;
+  }
+
+  .hero-bg-desktop {
+    display: none;
+  }
+
+  @media (min-width: 769px) {
+    .hero-bg-mobile {
+      display: none;
+    }
+    .hero-bg-desktop {
+      display: block;
     }
   }
 
@@ -163,4 +212,5 @@ const mobileImage = bgImageMobile ? `url('${bgImageMobile}')` : `url('${bgImage}
     width: 100%;
     margin-top: auto;
   }
+
 </style>
